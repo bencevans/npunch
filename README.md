@@ -1,10 +1,14 @@
+#Currently In Development.
+
+<hr/>
+
 #n(ode)punch
 
 Forever. Node. Pow.
 
 nodepunch interfaces Pow and Forever in order to run your apps in development with no pain.
 
-###Intended Usage
+###Intended Command List (Likely to Change)
 
 	# npunch
 	<<COMMAND LIST>>
