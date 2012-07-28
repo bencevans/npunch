@@ -1,0 +1,30 @@
+{
+  "name": "npunch",
+  "version": "0.0.0",
+  "description": "Easy NodeJS WebApp Development Tool",
+  "main": "bin/npunch",
+  "dependencies": {
+    "forever-monitor": "~1.0.2",
+    "freeport": "~1.0.0",
+    "underscore": "~1.3.3",
+    "eventemitter2": "~0.4.9",
+    "forever": "~0.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bencevans/npunch.git"
+  },
+  "keywords": [
+    "pow",
+    "forever",
+    "dev",
+    "development",
+    "tool"
+  ],
+  "author": "Ben Evans",
+  "license": "BSD"
+}

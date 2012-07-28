@@ -1,0 +1,141 @@
+#!/usr/bin/env node
+
+var path = require('path'),
+freeport = require('freeport'),
+forever = require('forever-monitor'),
+_ = require('underscore'),
+fs = require('fs'),
+nodepunch = require('../lib/npunch.js');
+
+var powPath = nodepunch.powPath
+var nodepunchPath = nodepunch.nodepunchPath
+
+// Backwards Compatibility.
+fs.existsSync || (fs.existsSync = path.existsSync);
+
+// Check required paths exist.
+
+if(!fs.existsSync(powPath)) {
+	console.error('Pow doesn\'t appear to be installed to the usual location if at all.');
+	process.exit();
+}
+
+if(fs.existsSync(nodepunchPath) == false) {
+
+	console.log('This appears to be the first time you\'ve run nodepunch...');
+	console.log('Creating folder ~/.nodepunch/');
+
+	if(!fs.mkdirSync(nodepunchPath)){
+		console.log('Created Folder Successfully');
+	} else {
+		console.error('Unable to create the directory ~/.nodepunch/');
+		process.exit();
+	}
+} else {
+	//console.log('Already Exists');
+}
+
+
+var fsStats = fs.Stats();
+
+
+
+var alias = {ln: 'link',ls:'list', up:'start', down:'stop'}
+
+var commands = {
+	link: function () {
+
+		try {
+			nodepunch.link(process.cwd());
+		} catch(err) {
+
+			if(err.errno == 47)
+				console.warn("There's already a project with this name.");
+
+		}
+
+		
+	},
+	unlink: function () {
+
+		nodepunch.unlink(process.argv[3] || process.cwd())
+
+	},
+	list: function () {
+
+		console.log(nodepunch.list());
+
+	},
+	start: function () {
+
+		if (process.argv[3]) {
+
+			freeport(function(err, port) {
+				fs.writeFileSync(powPath + '/' + process.argv[3] , port);
+
+				var child = new (forever.Monitor)(nodepunchPath + '/' + process.argv[3] + '/server.js', {
+					max: 3,
+					silent: true,
+					env: {'PORT':port} 
+				}
+				);
+
+				child.on('data', function (data) {
+					console.log(data);
+				});
+
+				child.on('exit', function () {
+					console.log('your-filename.js has exited after 3 restarts');
+				});
+
+				child.start();
+
+
+				console.log('Started(ish) ' + port);
+			});
+
+		};
+	},
+	stop: function () {
+		fs.unlinkSync(nodepunchPath + '/' + process.argv[3] );
+	},
+	open: function () {
+
+		// Project name given
+		if(typeof process.argv[3] !== 'undefined') {
+			var projectInfo = nodepunch.projectInfo(process.argv[3]);
+			if(projectInfo && projectInfo.status == 'on')
+				util.exec('open http://' + projectInfo.name + '.dev')
+			else
+				console.log("Projects Status must be 'on', It's currently '" + projectInfo.status + "'");
+		} else {
+			//Try and work out project name from cwd
+
+
+		}
+
+
+	},
+	help: function () {
+		console.log('nodepunch - forever hits pow.cx');
+		console.log('link [directory] - ');
+		console.log('list - ');
+		console.log('start [name] - ');
+		console.log('stop [name] -');
+	},
+	default: function () {
+		console.log('');
+		console.log('Unknown Command. Showing Help...');
+		console.log('');
+		this.help();
+	}
+}
+
+if(typeof process.argv[2] !== 'undefined' && typeof commands[process.argv[2]] == 'function')
+	commands[process.argv[2]]();
+else
+	if(typeof alias[process.argv[2]] !== 'undefined')
+		commands[alias[process.argv[2]]]()
+	else
+		commands.default()
+
