@@ -33,7 +33,7 @@ nodepunch interfaces Pow and Forever in order to run your apps in development wi
 	#npunch restart
 	restarts project's instance
 	
-	#npunch watch [on/true|off/false]
+	#npunch watch projectName [on/true|off/false]
 	Turns on/off watch restarting (Restarting on filesystem change)
 	
 	#npunch stop
