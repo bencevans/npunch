@@ -74,7 +74,7 @@ var commands = {
 
 	},
 	start: function () {
-
+/*
 		if (process.argv[3]) {
 
 			freeport(function(err, port) {
@@ -102,6 +102,9 @@ var commands = {
 			});
 
 		};
+		*/
+
+		nodepunch.start(process.argv[3]);
 	},
 	stop: function () {
 		fs.unlinkSync(nodepunchPath + '/' + process.argv[3] );
