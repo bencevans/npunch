@@ -58,7 +58,14 @@ var commands = {
 	},
 	unlink: function () {
 
-		nodepunch.unlink(process.argv[3] || process.cwd())
+		var projectName = nodepunch.findProjectName(process.argv[3] || process.cwd())
+
+		//Check a project was found and it's name returned.
+
+		if(typeof projectName !== 'string')
+			throw Error("Project Not Found")
+
+		nodepunch.unlink(projectName)
 
 	},
 	list: function () {
