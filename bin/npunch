@@ -13,6 +13,14 @@ var nodepunchPath = nodepunch.nodepunchPath
 // Backwards Compatibility.
 fs.existsSync || (fs.existsSync = path.existsSync);
 
+
+// Check Supported Operating System
+
+if(process.platform !== 'darwin') {
+	console.error('n(ode)Punch only supports Darwin/MacOSX due to support from dependencies (Pow).');
+	process.exit();
+}
+
 // Check required paths exist.
 
 if(!fs.existsSync(powPath)) {
