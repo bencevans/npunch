@@ -15,6 +15,7 @@
     "mocha": "*"
   },
   "scripts": {
+    "install": "mkdir -p ~/.nodepunch",
     "test": "mocha -R spec tests"
   },
   "repository": {
