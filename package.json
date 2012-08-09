@@ -29,6 +29,7 @@
     "development",
     "tool"
   ],
+  "engines" : { "node" : "0.8.x" },
   "author": "Ben Evans",
   "license": "BSD"
 }

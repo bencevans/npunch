@@ -9,6 +9,8 @@ Forever. Node. Pow.
 
 nodepunch interfaces Pow and Forever in order to run your apps in development with no pain.
 
+Support for Node 0.8.x
+
 ###Intended Command List (Likely to Change)
 
 	# npunch
