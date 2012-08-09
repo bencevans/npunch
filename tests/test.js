@@ -9,7 +9,7 @@ describe('Library', function(){
 			assert.equal(true, nodepunch.link(process.cwd() + '/tests/testProject'));
 		})
 		it('should error if a project already exists with the same name', function(){
-			assert.equal(Error, nodepunch.link(process.cwd() + '/tests/testProject'));
+			assert.throws(function(){ nodepunch.link(process.cwd() + '/tests/testProject')}, Error);
 		})
 	})
 
@@ -27,7 +27,7 @@ describe('Library', function(){
 			assert.equal(true, nodepunch.unlink('testProject'));
 		})
 		it('should error if a project doesn\'t exist when trying to unlink', function(){
-			assert.equal(Error, nodepunch.unlink('testProject'));
+			assert.throws(function(){return nodepunch.unlink('testProject')}, Error);
 		})
 	})
 })
