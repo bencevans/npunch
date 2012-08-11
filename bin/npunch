@@ -2,6 +2,7 @@
 
 var program = require('commander'),
 nodepunch = require('../lib/npunch.js'),
+path = require('path'),
 fs = require('fs');
 
 
