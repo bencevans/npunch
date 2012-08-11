@@ -53,7 +53,23 @@ program
     .command('rm <projectName>')
     .description('link/add project')
     .action(function(projectName){
-        console.log('setup');
+
+    // Check the project exists
+    if(self.exists(projectName) == false) {
+        throw Error("No Project Found")
+    }
+
+    //TODO: Check and turn off if running before unlink
+
+    // Go forth and unlink
+    var unlinkResult = fs.unlinkSync(self.nodepunchPath + '/' + projectName);
+
+    if(typeof unlinkResult == 'undefined')
+        return true
+    else
+        return unlinkResult
+
+
     });
 
 program
@@ -70,7 +86,7 @@ program
     .command('start <projectName>')
     .description('start a project')
     .action(function(projectName){
-        nodepunch.start(process.argv[3]);
+        nodepunch.start(projectName);
     });
 
 program
@@ -84,7 +100,19 @@ program
     .command('open <projectName>')
     .description('open the project in browser')
     .action(function(projectName){
-        console.log('deploying "%s"', env);
+
+        // Project name given
+        if(typeof process.argv[3] !== 'undefined') {
+            var projectInfo = nodepunch.projectInfo(process.argv[3]);
+            if(projectInfo && projectInfo.status == 'on')
+                util.exec('open http://' + projectInfo.name + '.dev')
+            else
+                console.log("Projects Status must be 'on', It's currently '" + projectInfo.status + "'");
+        } else {
+            //Try and work out project name from cwd
+
+        }
+
     });
 
 program
