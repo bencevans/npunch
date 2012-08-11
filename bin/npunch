@@ -50,24 +50,31 @@ program
     });
 
 program
-    .command('rm <projectName>')
+    .command('rm <projectIdentifier>')
     .description('link/add project')
-    .action(function(projectName){
+    .action(function (projectIdentifier){
 
-    // Check the project exists
-    if(self.exists(projectName) == false) {
-        throw Error("No Project Found")
-    }
+        var projectName = nodepunch.findProjectName(projectIdentifier);
 
-    //TODO: Check and turn off if running before unlink
+        if(!projectName) {
+            throw Error("No Project Found")
+        }
 
-    // Go forth and unlink
-    var unlinkResult = fs.unlinkSync(self.nodepunchPath + '/' + projectName);
 
-    if(typeof unlinkResult == 'undefined')
-        return true
-    else
-        return unlinkResult
+        // Check the project exists
+        if(self.exists(projectName) == false) {
+            throw Error("No Project Found")
+        }
+
+        //TODO: Check and turn off if running before unlink
+
+        // Go forth and unlink
+        var unlinkResult = fs.unlinkSync(self.nodepunchPath + '/' + projectName);
+
+        if(typeof unlinkResult == 'undefined')
+            return true
+        else
+            return unlinkResult
 
 
     });
@@ -83,23 +90,44 @@ program
     });
 
 program
-    .command('start <projectName>')
+    .command('start <projectIdentifier>')
     .description('start a project')
-    .action(function(projectName){
+    .action(function (projectIdentifier){
+
+        var projectName = nodepunch.findProjectName(projectIdentifier);
+
+        if(!projectName) {
+            throw Error("No Project Found")
+        }
+
         nodepunch.start(projectName);
     });
 
 program
-    .command('stop <projectName>')
+    .command('stop <projectIdentifier>')
     .description('stop a project')
-    .action(function(projectName){
+    .action(function (projectIdentifier){
+
+        var projectName = nodepunch.findProjectName(projectIdentifier);
+
+        if(!projectName) {
+            throw Error("No Project Found")
+        }
+
         fs.unlinkSync(nodepunchPath + '/' + process.argv[3] );
     });
 
 program
-    .command('open <projectName>')
+    .command('open <projectIdentifier>')
     .description('open the project in browser')
-    .action(function(projectName){
+    .action(function (projectIdentifier){
+
+        var projectName = nodepunch.findProjectName(projectIdentifier);
+
+        if(!projectName) {
+            throw Error("No Project Found")
+        }
+
 
         // Project name given
         if(typeof process.argv[3] !== 'undefined') {
