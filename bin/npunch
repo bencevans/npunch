@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var program = require('commander'),
+tabtabCommander = require('tabtab-commander'),
 nodepunch = require('../lib/npunch.js'),
 path = require('path'),
 fs = require('fs');
@@ -144,11 +145,7 @@ program
 
     });
 
-program
-    .command('*')
-    .action(function(){
-        console.log('Unknown Command. Try \'npunch --help\'');
-    });
+tabtabCommander.init(program, 'npunch');
 
 program.parse(process.argv);
 
