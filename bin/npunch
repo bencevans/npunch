@@ -4,7 +4,9 @@ var program = require('commander'),
 tabtabCommander = require('tabtab-commander'),
 nodepunch = require('../lib/npunch.js'),
 path = require('path'),
-fs = require('fs');
+fs = require('fs'),
+_ = require('underscore'),
+Table = require('cli-table');
 
 
 // Backwards Compatibility.
@@ -86,9 +88,17 @@ program
     .description('list added projects')
     .action(function(){
 
-        //TODO: Put Output into a pretty table.
+        var table = new Table({
+            head: ['Name', 'Path']
+        });
 
-        console.log(nodepunch.list());
+        // table is an Array, so you can `push`, `unshift`, `splice` and friends
+        _.each(nodepunch.list(), function(project) {
+            table.push([project.name, project.path]);
+        })
+
+        console.log(table.toString());
+
     });
 
 program
