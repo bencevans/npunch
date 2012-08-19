@@ -43,7 +43,7 @@ program
         //TODO: 'npunch ln ./a/folder/that/doesnt/exist' should fail
 
         try {
-            nodepunch.link(process.cwd());
+            nodepunch.link(path.resolve(process.cwd(), dir));
         } catch(err) {
 
             if(err.errno == 47)
