@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var program = require('commander'),
-tabtabCommander = require('tabtab-commander'),
+commanderTabTab = require('commander-tabtab'),
 nodepunch = require('../lib/npunch.js'),
 path = require('path'),
 fs = require('fs'),
@@ -155,7 +155,8 @@ program
 
     });
 
-tabtabCommander.init(program, 'npunch');
+
+commanderTabTab.init(program, 'npunch', {'projectIdentifier': _.map(nodepunch.list(), function(project){return project.name})});
 
 program.parse(process.argv);
 
