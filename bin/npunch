@@ -7,6 +7,7 @@ path = require('path'),
 fs = require('fs'),
 _ = require('underscore'),
 Table = require('cli-table');
+rpc = require('nodejs-light_rpc');
 
 
 // Backwards Compatibility.
@@ -112,7 +113,17 @@ program
             throw Error("No Project Found")
         }
 
-        nodepunch.start(projectName);
+        //nodepunch.start(projectName);
+
+        rpc.connect(5556, 'localhost', function(remote, conn){
+            remote.start(projectName, function(err, data){
+                console.log(data);
+
+                conn.destroy();
+                conn.end();
+            });
+        });
+
     });
 
 program
@@ -126,7 +137,16 @@ program
             throw Error("No Project Found")
         }
 
-        fs.unlinkSync(nodepunchPath + '/' + process.argv[3] );
+        rpc.connect(5556, 'localhost', function(remote, conn){
+            remote.stop(projectName, function(err, data){
+                console.log(data);
+
+                conn.destroy();
+                conn.end();
+            });
+        });
+
+        //fs.unlinkSync(nodepunchPath + '/' + process.argv[3] );
     });
 
 program

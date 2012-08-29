@@ -14,7 +14,8 @@
     "commander": "1.0.x",
     "commander-tabtab": "0.0.1",
     "cli-table": "0.0.2",
-    "forever-monitor": "~1.1.0"
+    "forever-monitor": "~1.1.0",
+    "nodejs-light_rpc": "https://github.com/romulka/nodejs-light_rpc/tarball/master"
   },
   "devDependencies": {
     "mocha": "*"
