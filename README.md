@@ -1,7 +1,3 @@
-#Currently In Development.
-
-<hr/>
-
 #n(ode)punch
 [![Build Status](https://secure.travis-ci.org/bencevans/npunch.png?branch=master)](http://travis-ci.org/bencevans/npunch)
 
